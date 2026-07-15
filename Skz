@@ -1,0 +1,56 @@
+local ScreenGui = Instance.new("ScreenGui")
+local DanceButton = Instance.new("ImageButton")
+local UICorner = Instance.new("UICorner")
+local UIStroke = Instance.new("UIStroke")
+
+local TextChatService = game:GetService("TextChatService")
+local camera = workspace.CurrentCamera
+
+ScreenGui.Parent = game.Players.LocalPlayer.PlayerGui
+
+DanceButton.Parent = ScreenGui
+DanceButton.Size = UDim2.new(0,50,0,50)
+DanceButton.AnchorPoint = Vector2.new(0.5,0.5)
+DanceButton.Position = UDim2.new(0.25,0,0.5,0)
+
+DanceButton.Image = "rbxassetid://103443045922080"
+DanceButton.ScaleType = Enum.ScaleType.Fit
+DanceButton.BackgroundTransparency = 1
+
+DanceButton.Active = true
+DanceButton.Draggable = true
+
+UICorner.CornerRadius = UDim.new(0,15)
+UICorner.Parent = DanceButton
+
+UIStroke.Parent = DanceButton
+UIStroke.Color = Color3.fromRGB(0,0,0)
+UIStroke.Thickness = 2
+
+
+DanceButton.MouseButton1Click:Connect(function()
+
+    task.spawn(function()
+        local channel = TextChatService.TextChannels:FindFirstChild("RBXGeneral")
+
+        if channel then
+            channel:SendAsync("/e dance2")
+        end
+    end)
+
+
+    task.spawn(function()
+
+        task.wait(0.9)
+
+        local old = camera.CFrame
+
+        camera.CFrame = old * CFrame.Angles(0, math.rad(60), 0)
+
+        task.wait(0.01)
+
+        camera.CFrame = old
+
+    end)
+
+end)
